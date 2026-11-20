@@ -1,0 +1,7 @@
+{
+  "dmzconfighalo.command.height": "Halo height set to %s pixels.",
+  "dmzconfighalo.command.color": "Halo color set to %s.",
+  "dmzconfighalo.command.color.reset": "Halo color reset to the original.",
+  "dmzconfighalo.command.color.invalid": "Invalid color. Use a 6-digit hex code (e.g. FFD700 or #FFD700) or \"reset\".",
+  "dmzconfighalo.command.info": "Your halo: height %s px, color %s."
+}

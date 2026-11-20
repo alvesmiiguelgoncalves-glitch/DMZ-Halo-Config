@@ -1,0 +1,7 @@
+{
+  "dmzconfighalo.command.height": "Altura da auréola definida para %s pixels.",
+  "dmzconfighalo.command.color": "Cor da auréola definida para %s.",
+  "dmzconfighalo.command.color.reset": "Cor da auréola restaurada para a original.",
+  "dmzconfighalo.command.color.invalid": "Cor inválida. Use um código hexadecimal de 6 dígitos (ex.: FFD700 ou #FFD700) ou \"reset\".",
+  "dmzconfighalo.command.info": "Sua auréola: altura %s px, cor %s."
+}
