@@ -50,7 +50,7 @@ Requisitos: **JDK 17** e **Gradle 8.1.1**.
 gradle wrapper --gradle-version 8.1.1   # só na primeira vez (cria o ./gradlew)
 ./gradlew build
 ```
-O `.jar` fica em `build/libs/dmzconfighalo-1.0.0.jar`.
+O `.jar` fica em `build/libs/dmzconfighalo-1.0.2.jar`.
 
 Antes de compilar, troque `mod_authors` em `gradle.properties` pelo seu nome.
 

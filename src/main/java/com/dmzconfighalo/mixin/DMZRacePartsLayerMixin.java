@@ -2,6 +2,7 @@ package com.dmzconfighalo.mixin;
 
 import com.dmzconfighalo.HaloSettings;
 import com.dmzconfighalo.client.ClientHaloData;
+import com.dmzconfighalo.client.HaloDebug;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -39,6 +40,7 @@ public abstract class DMZRacePartsLayerMixin {
             return;
         }
         HaloSettings settings = ClientHaloData.get(player.getUUID());
+        HaloDebug.haloBoneDrawn(player.getUUID(), settings);
         if (settings == null || settings.isDefault()) {
             return;
         }

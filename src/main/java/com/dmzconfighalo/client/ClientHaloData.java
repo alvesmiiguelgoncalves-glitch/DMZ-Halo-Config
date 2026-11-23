@@ -22,6 +22,7 @@ public final class ClientHaloData {
     }
 
     public static void onSync(UUID playerId, HaloSettings settings) {
+        HaloDebug.settingsReceived(playerId, settings);
         if (settings.isDefault()) {
             SETTINGS.remove(playerId);
         } else {
