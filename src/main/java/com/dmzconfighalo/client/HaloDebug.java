@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public final class HaloDebug {
 
-    private static final boolean CHAT = true;
+    private static final boolean CHAT = false;
 
     private static volatile boolean hookSeen = false;
     private static volatile HaloSettings lastApplied = null;

@@ -3,5 +3,13 @@
   "dmzconfighalo.command.color": "Cor da auréola definida para %s.",
   "dmzconfighalo.command.color.reset": "Cor da auréola restaurada para a original.",
   "dmzconfighalo.command.color.invalid": "Cor inválida. Use um código hexadecimal de 6 dígitos (ex.: FFD700 ou #FFD700) ou \"reset\".",
-  "dmzconfighalo.command.info": "Sua auréola: altura %s px, cor %s."
+  "dmzconfighalo.command.info": "Sua auréola: altura %s px, cor %s.",
+  "dmzconfighalo.command.formheight.set": "Altura da auréola na forma \"%s\" definida para %s pixels.",
+  "dmzconfighalo.command.formheight.removed": "Altura da auréola na forma \"%s\" removida.",
+  "dmzconfighalo.command.formheight.list": "Sua altura da auréola por forma:",
+  "dmzconfighalo.command.formheight.empty": "Você não tem alturas por forma. Transforme-se e use /dmzhalo config formheight current <pixels>.",
+  "dmzconfighalo.command.formheight.cleared": "Todas as alturas por forma foram removidas.",
+  "dmzconfighalo.command.formheight.noform": "Você não está transformado. Transforme-se primeiro, ou use /dmzhalo config formheight <forma> <pixels>.",
+  "dmzconfighalo.command.formheight.invalid": "Nome de forma inválido. Use apenas letras, números, _ - e . (até 48 caracteres).",
+  "dmzconfighalo.command.formheight.toomany": "Formas demais configuradas (máximo %s)."
 }

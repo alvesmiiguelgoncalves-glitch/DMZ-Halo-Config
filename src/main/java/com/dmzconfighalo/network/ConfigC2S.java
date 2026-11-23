@@ -14,29 +14,25 @@ import java.util.function.Supplier;
  */
 public class ConfigC2S {
 
-    private final float height;
-    private final int color;
+    private final HaloSettings settings;
 
-    public ConfigC2S(float height, int color) {
-        this.height = height;
-        this.color = color;
+    public ConfigC2S(HaloSettings settings) {
+        this.settings = settings;
     }
 
     public static void encode(ConfigC2S msg, FriendlyByteBuf buf) {
-        buf.writeFloat(msg.height);
-        buf.writeInt(msg.color);
+        HaloNetwork.writeSettings(buf, msg.settings);
     }
 
     public static ConfigC2S decode(FriendlyByteBuf buf) {
-        return new ConfigC2S(buf.readFloat(), buf.readInt());
+        return new ConfigC2S(HaloNetwork.readSettings(buf));
     }
 
     public static void handle(ConfigC2S msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null) {
-                // HaloSettings sanitizes (clamps height, validates color) in its constructor.
-                HaloManager.set(sender, new HaloSettings(msg.height, msg.color));
+                HaloManager.set(sender, msg.settings);
             }
         });
         ctx.get().setPacketHandled(true);

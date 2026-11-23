@@ -3,6 +3,7 @@ package com.dmzconfighalo.mixin;
 import com.dmzconfighalo.HaloSettings;
 import com.dmzconfighalo.client.ClientHaloData;
 import com.dmzconfighalo.client.HaloDebug;
+import com.dmzconfighalo.compat.DmzStats;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -54,8 +55,10 @@ public abstract class DMZRacePartsLayerMixin {
 
         // GeckoLib bone positions are in pixels (1/16 block); +Y = up. DMZ re-syncs this bone every frame,
         // and we restore the value anyway.
+        // Base height + per-transformation height (blended by DMZ's own form-transition factors).
+        float formOffset = DmzStats.formHeightOffset(player, settings.formHeights(), partialTick);
         float originalY = bone.getPosY();
-        bone.setPosY(originalY + settings.height());
+        bone.setPosY(originalY + settings.height() + formOffset);
         try {
             VertexConsumer consumer = buffer.getBuffer(renderType);
             GeoRenderer renderer = ((GeoRenderLayer<?>) (Object) this).getRenderer();

@@ -14,28 +14,25 @@ import java.util.function.Supplier;
 public class SyncHaloS2C {
 
     private final UUID playerId;
-    private final float height;
-    private final int color;
+    private final HaloSettings settings;
 
-    public SyncHaloS2C(UUID playerId, float height, int color) {
+    public SyncHaloS2C(UUID playerId, HaloSettings settings) {
         this.playerId = playerId;
-        this.height = height;
-        this.color = color;
+        this.settings = settings;
     }
 
     public static void encode(SyncHaloS2C msg, FriendlyByteBuf buf) {
         buf.writeUUID(msg.playerId);
-        buf.writeFloat(msg.height);
-        buf.writeInt(msg.color);
+        HaloNetwork.writeSettings(buf, msg.settings);
     }
 
     public static SyncHaloS2C decode(FriendlyByteBuf buf) {
-        return new SyncHaloS2C(buf.readUUID(), buf.readFloat(), buf.readInt());
+        return new SyncHaloS2C(buf.readUUID(), HaloNetwork.readSettings(buf));
     }
 
     public static void handle(SyncHaloS2C msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> () -> ClientHaloData.onSync(msg.playerId, new HaloSettings(msg.height, msg.color))));
+                () -> () -> ClientHaloData.onSync(msg.playerId, msg.settings)));
         ctx.get().setPacketHandled(true);
     }
 }

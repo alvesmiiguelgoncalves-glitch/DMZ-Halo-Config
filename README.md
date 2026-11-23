@@ -14,6 +14,18 @@ altura e cor, por comando ou por arquivo de configuração.
 | `/dmzhalo config height <valor>` | todos | `0` = posição original do DMZ. Positivo sobe, negativo desce. Em **pixels** (1 pixel = 1/16 de bloco). Aceita decimais: `0.2`, `-0.3`, `1.5`, `-2.6`. Limite: ±64. |
 | `/dmzhalo config color <hex>` | todos | Cor em hexadecimal: `FFD700` ou `#FFD700`. |
 | `/dmzhalo config color reset` | todos | Volta para a cor original do DMZ. |
+| `/dmzhalo config formheight current <valor>` | todos | Altura **extra** da auréola para a transformação em que você está agora. Transforme-se e rode o comando. |
+| `/dmzhalo config formheight <forma> <valor>` | todos | O mesmo, dizendo o nome da forma (ex.: `supersaiyan`). Aperte TAB para ver sugestões. |
+| `/dmzhalo config formheight <forma> reset` | todos | Remove a altura extra dessa forma. |
+| `/dmzhalo config formheight` / `... clear` | todos | Lista suas alturas por forma / remove todas. |
+
+### Altura por transformação
+
+A altura final da auréola é `height` + a altura extra da forma atual (e da forma *stack*, como Kaioken, se houver; as duas somam).
+Durante a transformação a altura **sobe/desce suavemente**, usando os mesmos fatores de transição que o próprio DMZ usa para o corpo:
+segurando **G** (a altura acompanha o progresso da carga) e na transformação instantânea (transição curta), e também ao reverter.
+
+Exemplo: `/dmzhalo config formheight supersaiyan 2` e `/dmzhalo config formheight supersaiyan4 4.5`.
 
 Todos os comandos de `config` alteram **somente a sua auréola**. Os outros jogadores veem a sua auréola com as suas configurações.
 A auréola continua aparecendo só quando o DMZ a mostra (jogador morto, ou `/dmzhalo on`).
@@ -26,6 +38,7 @@ A auréola continua aparecendo só quando o DMZ a mostra (jogador morto, ou `/dm
 [halo]
     height = 0.0
     color = "reset"
+    formHeights = ["supersaiyan=2.0", "supersaiyan4=4.5"]
     applyOnJoin = true
 ```
 
@@ -50,7 +63,7 @@ Requisitos: **JDK 17** e **Gradle 8.1.1**.
 gradle wrapper --gradle-version 8.1.1   # só na primeira vez (cria o ./gradlew)
 ./gradlew build
 ```
-O `.jar` fica em `build/libs/dmzconfighalo-1.0.2.jar`.
+O `.jar` fica em `build/libs/dmzconfighalo-1.1.0.jar`.
 
 Antes de compilar, troque `mod_authors` em `gradle.properties` pelo seu nome.
 

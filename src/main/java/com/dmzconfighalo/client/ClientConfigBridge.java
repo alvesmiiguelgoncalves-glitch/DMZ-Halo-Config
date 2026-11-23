@@ -8,6 +8,10 @@ import com.dmzconfighalo.network.HaloNetwork;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.OptionalInt;
 
 /** Keeps the config file (dmzconfighalo-client.toml) and the server in sync. */
@@ -29,7 +33,20 @@ public final class ClientConfigBridge {
                 rgb = parsed.getAsInt();
             }
         }
-        return new HaloSettings(height, rgb);
+        Map<String, Float> forms = new HashMap<>();
+        for (String line : HaloConfig.FORM_HEIGHTS.get()) {
+            Object[] entry = HaloConfig.parseEntry(line);
+            if (entry != null) {
+                forms.put((String) entry[0], (Float) entry[1]);
+            }
+        }
+        return new HaloSettings(height, rgb, forms);
+    }
+
+    private static List<String> formLines(HaloSettings settings) {
+        List<String> lines = new ArrayList<>();
+        settings.formHeights().forEach((name, value) -> lines.add(name + "=" + Float.toString(value)));
+        return lines;
     }
 
     /** The server changed our settings (command, or applying our file): mirror them in the file. */
@@ -42,6 +59,7 @@ public final class ClientConfigBridge {
             // Double.parseDouble(Float.toString(..)) keeps "0.2" instead of "0.20000000298023224"
             double height = Double.parseDouble(Float.toString(settings.height()));
             String color = HaloSettings.formatColor(settings.color());
+            List<String> forms = formLines(settings);
             boolean changed = false;
             if (Double.compare(HaloConfig.HEIGHT.get(), height) != 0) {
                 HaloConfig.HEIGHT.set(height);
@@ -49,6 +67,10 @@ public final class ClientConfigBridge {
             }
             if (!color.equalsIgnoreCase(HaloConfig.COLOR.get().trim())) {
                 HaloConfig.COLOR.set(color);
+                changed = true;
+            }
+            if (!forms.equals(new ArrayList<>(HaloConfig.FORM_HEIGHTS.get()))) {
+                HaloConfig.FORM_HEIGHTS.set(forms);
                 changed = true;
             }
             if (changed) {
@@ -93,7 +115,7 @@ public final class ClientConfigBridge {
             if (connection == null || !HaloNetwork.CHANNEL.isRemotePresent(connection.getConnection())) {
                 return; // not in a world, or the server does not have this addon
             }
-            HaloNetwork.CHANNEL.sendToServer(new ConfigC2S(settings.height(), settings.color()));
+            HaloNetwork.CHANNEL.sendToServer(new ConfigC2S(settings));
         });
     }
 }

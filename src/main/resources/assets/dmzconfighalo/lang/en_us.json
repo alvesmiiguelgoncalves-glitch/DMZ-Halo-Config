@@ -3,5 +3,13 @@
   "dmzconfighalo.command.color": "Halo color set to %s.",
   "dmzconfighalo.command.color.reset": "Halo color reset to the original.",
   "dmzconfighalo.command.color.invalid": "Invalid color. Use a 6-digit hex code (e.g. FFD700 or #FFD700) or \"reset\".",
-  "dmzconfighalo.command.info": "Your halo: height %s px, color %s."
+  "dmzconfighalo.command.info": "Your halo: height %s px, color %s.",
+  "dmzconfighalo.command.formheight.set": "Halo height for form \"%s\" set to %s pixels.",
+  "dmzconfighalo.command.formheight.removed": "Halo height for form \"%s\" removed.",
+  "dmzconfighalo.command.formheight.list": "Your halo height per form:",
+  "dmzconfighalo.command.formheight.empty": "You have no per-form halo heights. Transform and use /dmzhalo config formheight current <pixels>.",
+  "dmzconfighalo.command.formheight.cleared": "All per-form halo heights removed.",
+  "dmzconfighalo.command.formheight.noform": "You have no active transformation. Transform first, or use /dmzhalo config formheight <form> <pixels>.",
+  "dmzconfighalo.command.formheight.invalid": "Invalid form name. Use only letters, numbers, _ - and . (up to 48 characters).",
+  "dmzconfighalo.command.formheight.toomany": "Too many forms configured (maximum %s)."
 }
