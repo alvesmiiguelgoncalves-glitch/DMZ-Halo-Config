@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public final class HaloNetwork {
 
-    private static final String PROTOCOL = "2";
+    private static final String PROTOCOL = "3";
 
     // acceptMissingOr: players/servers without this addon can still connect.
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
@@ -35,29 +35,46 @@ public final class HaloNetwork {
                 ConfigC2S::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
     }
 
-    static void writeSettings(FriendlyByteBuf buf, HaloSettings s) {
-        buf.writeFloat(s.height());
-        buf.writeInt(s.color());
-        buf.writeVarInt(s.formHeights().size());
-        s.formHeights().forEach((name, value) -> {
+    private static void writeTable(FriendlyByteBuf buf, Map<String, Float> table) {
+        buf.writeVarInt(table.size());
+        table.forEach((name, value) -> {
             buf.writeUtf(name, 64);
             buf.writeFloat(value);
         });
+    }
+
+    private static Map<String, Float> readTable(FriendlyByteBuf buf) {
+        int count = buf.readVarInt();
+        Map<String, Float> table = new HashMap<>();
+        for (int i = 0; i < count; i++) {
+            String name = buf.readUtf(64);
+            float value = buf.readFloat();
+            if (i < HaloSettings.MAX_FORMS) {
+                table.put(name, value);
+            }
+        }
+        return table;
+    }
+
+    static void writeSettings(FriendlyByteBuf buf, HaloSettings s) {
+        buf.writeFloat(s.height());
+        buf.writeInt(s.color());
+        buf.writeFloat(s.rotX());
+        buf.writeFloat(s.rotY());
+        buf.writeFloat(s.rotZ());
+        writeTable(buf, s.formHeights());
+        writeTable(buf, s.hairHeights());
     }
 
     /** HaloSettings sanitizes everything (clamps, validates names, caps the entry count). */
     static HaloSettings readSettings(FriendlyByteBuf buf) {
         float height = buf.readFloat();
         int color = buf.readInt();
-        int count = buf.readVarInt();
-        Map<String, Float> forms = new HashMap<>();
-        for (int i = 0; i < count; i++) {
-            String name = buf.readUtf(64);
-            float value = buf.readFloat();
-            if (i < HaloSettings.MAX_FORMS) {
-                forms.put(name, value);
-            }
-        }
-        return new HaloSettings(height, color, forms);
+        float rotX = buf.readFloat();
+        float rotY = buf.readFloat();
+        float rotZ = buf.readFloat();
+        Map<String, Float> forms = readTable(buf);
+        Map<String, Float> hairs = readTable(buf);
+        return new HaloSettings(height, color, forms, hairs, rotX, rotY, rotZ);
     }
 }

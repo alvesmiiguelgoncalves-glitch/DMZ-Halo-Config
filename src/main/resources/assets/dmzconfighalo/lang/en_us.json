@@ -9,7 +9,16 @@
   "dmzconfighalo.command.formheight.list": "Your halo height per form:",
   "dmzconfighalo.command.formheight.empty": "You have no per-form halo heights. Transform and use /dmzhalo config formheight current <pixels>.",
   "dmzconfighalo.command.formheight.cleared": "All per-form halo heights removed.",
-  "dmzconfighalo.command.formheight.noform": "You have no active transformation. Transform first, or use /dmzhalo config formheight <form> <pixels>.",
-  "dmzconfighalo.command.formheight.invalid": "Invalid form name. Use only letters, numbers, _ - and . (up to 48 characters).",
-  "dmzconfighalo.command.formheight.toomany": "Too many forms configured (maximum %s)."
+  "dmzconfighalo.command.info.rotation": "Rotation: X %s, Y %s, Z %s degrees.",
+  "dmzconfighalo.command.rotation.set": "Halo rotation %s set to %s degrees.",
+  "dmzconfighalo.command.rotation.reset": "Halo rotation reset.",
+  "dmzconfighalo.command.name.invalid": "Invalid name. Use only letters, numbers, _ - and . (up to 48 characters).",
+  "dmzconfighalo.command.name.toomany": "Too many entries configured (maximum %s).",
+  "dmzconfighalo.command.formheight.nocurrent": "You have no active transformation. Transform first, or use /dmzhalo config formheight <form> <pixels>.",
+  "dmzconfighalo.command.hairheight.set": "Halo height for hair \"%s\" set to %s pixels.",
+  "dmzconfighalo.command.hairheight.removed": "Halo height for hair \"%s\" removed.",
+  "dmzconfighalo.command.hairheight.list": "Your halo height per hair type:",
+  "dmzconfighalo.command.hairheight.empty": "You have no per-hair halo heights. Use /dmzhalo config hairheight current <pixels> (hair types: base, ssj, ssj2, ssj3, ssj4, custom, none).",
+  "dmzconfighalo.command.hairheight.cleared": "All per-hair halo heights removed.",
+  "dmzconfighalo.command.hairheight.nocurrent": "Could not detect your current hair. Use /dmzhalo config hairheight <hair> <pixels>."
 }

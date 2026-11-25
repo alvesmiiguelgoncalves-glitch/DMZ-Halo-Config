@@ -23,18 +23,36 @@ public final class HaloManager {
     private HaloManager() {
     }
 
+    private static Map<String, Float> readTable(CompoundTag parent, String name) {
+        Map<String, Float> table = new HashMap<>();
+        CompoundTag tag = parent.getCompound(name);
+        for (String key : tag.getAllKeys()) {
+            table.put(key, tag.getFloat(key));
+        }
+        return table;
+    }
+
+    private static void writeTable(CompoundTag parent, String name, Map<String, Float> table) {
+        if (table.isEmpty()) {
+            return;
+        }
+        CompoundTag tag = new CompoundTag();
+        table.forEach(tag::putFloat);
+        parent.put(name, tag);
+    }
+
     public static HaloSettings get(ServerPlayer player) {
         CompoundTag persisted = player.getPersistentData().getCompound(PERSISTED_TAG);
         if (!persisted.contains(KEY, Tag.TAG_COMPOUND)) {
             return HaloSettings.DEFAULT;
         }
         CompoundTag tag = persisted.getCompound(KEY);
-        Map<String, Float> forms = new HashMap<>();
-        CompoundTag formsTag = tag.getCompound("forms");
-        for (String name : formsTag.getAllKeys()) {
-            forms.put(name, formsTag.getFloat(name));
-        }
-        return new HaloSettings(tag.getFloat("height"), tag.contains("color") ? tag.getInt("color") : -1, forms);
+        return new HaloSettings(
+                tag.getFloat("height"),
+                tag.contains("color") ? tag.getInt("color") : -1,
+                readTable(tag, "forms"),
+                readTable(tag, "hairs"),
+                tag.getFloat("rotX"), tag.getFloat("rotY"), tag.getFloat("rotZ"));
     }
 
     /** @return true if something changed. */
@@ -50,11 +68,11 @@ public final class HaloManager {
             CompoundTag tag = new CompoundTag();
             tag.putFloat("height", settings.height());
             tag.putInt("color", settings.color());
-            if (!settings.formHeights().isEmpty()) {
-                CompoundTag formsTag = new CompoundTag();
-                settings.formHeights().forEach(formsTag::putFloat);
-                tag.put("forms", formsTag);
-            }
+            tag.putFloat("rotX", settings.rotX());
+            tag.putFloat("rotY", settings.rotY());
+            tag.putFloat("rotZ", settings.rotZ());
+            writeTable(tag, "forms", settings.formHeights());
+            writeTable(tag, "hairs", settings.hairHeights());
             persisted.put(KEY, tag);
         }
         root.put(PERSISTED_TAG, persisted);

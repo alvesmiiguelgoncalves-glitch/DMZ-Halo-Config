@@ -9,7 +9,16 @@
   "dmzconfighalo.command.formheight.list": "Sua altura da auréola por forma:",
   "dmzconfighalo.command.formheight.empty": "Você não tem alturas por forma. Transforme-se e use /dmzhalo config formheight current <pixels>.",
   "dmzconfighalo.command.formheight.cleared": "Todas as alturas por forma foram removidas.",
-  "dmzconfighalo.command.formheight.noform": "Você não está transformado. Transforme-se primeiro, ou use /dmzhalo config formheight <forma> <pixels>.",
-  "dmzconfighalo.command.formheight.invalid": "Nome de forma inválido. Use apenas letras, números, _ - e . (até 48 caracteres).",
-  "dmzconfighalo.command.formheight.toomany": "Formas demais configuradas (máximo %s)."
+  "dmzconfighalo.command.info.rotation": "Rotação: X %s, Y %s, Z %s graus.",
+  "dmzconfighalo.command.rotation.set": "Rotação %s da auréola definida para %s graus.",
+  "dmzconfighalo.command.rotation.reset": "Rotação da auréola restaurada.",
+  "dmzconfighalo.command.name.invalid": "Nome inválido. Use apenas letras, números, _ - e . (até 48 caracteres).",
+  "dmzconfighalo.command.name.toomany": "Entradas demais configuradas (máximo %s).",
+  "dmzconfighalo.command.formheight.nocurrent": "Você não está transformado. Transforme-se primeiro, ou use /dmzhalo config formheight <forma> <pixels>.",
+  "dmzconfighalo.command.hairheight.set": "Altura da auréola para o cabelo \"%s\" definida para %s pixels.",
+  "dmzconfighalo.command.hairheight.removed": "Altura da auréola para o cabelo \"%s\" removida.",
+  "dmzconfighalo.command.hairheight.list": "Sua altura da auréola por tipo de cabelo:",
+  "dmzconfighalo.command.hairheight.empty": "Você não tem alturas por cabelo. Use /dmzhalo config hairheight current <pixels> (tipos: base, ssj, ssj2, ssj3, ssj4, custom, none).",
+  "dmzconfighalo.command.hairheight.cleared": "Todas as alturas por cabelo foram removidas.",
+  "dmzconfighalo.command.hairheight.nocurrent": "Não consegui detectar seu cabelo atual. Use /dmzhalo config hairheight <cabelo> <pixels>."
 }

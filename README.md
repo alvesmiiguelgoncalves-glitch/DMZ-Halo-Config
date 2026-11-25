@@ -14,18 +14,31 @@ altura e cor, por comando ou por arquivo de configuração.
 | `/dmzhalo config height <valor>` | todos | `0` = posição original do DMZ. Positivo sobe, negativo desce. Em **pixels** (1 pixel = 1/16 de bloco). Aceita decimais: `0.2`, `-0.3`, `1.5`, `-2.6`. Limite: ±64. |
 | `/dmzhalo config color <hex>` | todos | Cor em hexadecimal: `FFD700` ou `#FFD700`. |
 | `/dmzhalo config color reset` | todos | Volta para a cor original do DMZ. |
-| `/dmzhalo config formheight current <valor>` | todos | Altura **extra** da auréola para a transformação em que você está agora. Transforme-se e rode o comando. |
-| `/dmzhalo config formheight <forma> <valor>` | todos | O mesmo, dizendo o nome da forma (ex.: `supersaiyan`). Aperte TAB para ver sugestões. |
-| `/dmzhalo config formheight <forma> reset` | todos | Remove a altura extra dessa forma. |
-| `/dmzhalo config formheight` / `... clear` | todos | Lista suas alturas por forma / remove todas. |
+| `/dmzhalo config formheight current <valor>` | todos | Altura **extra** da auréola para a transformação em que você está agora. |
+| `/dmzhalo config formheight <forma> <valor>` | todos | O mesmo, dizendo o nome da forma (ex.: `supersaiyan`). TAB sugere. `reset` remove, `clear` limpa tudo. |
+| `/dmzhalo config hairheight current <valor>` | todos | Altura extra para o **tipo de cabelo** atual (`base`, `ssj`, `ssj2`, `ssj3`, `ssj4`, `custom`, `none`). |
+| `/dmzhalo config hairheight <cabelo> <valor>` | todos | O mesmo, dizendo o tipo. `reset` remove, `clear` limpa tudo. |
+| `/dmzhalo config rotation <x\|y\|z> <graus>` | todos | Gira a auréola em volta do próprio centro. `z` inclina para o lado. |
+| `/dmzhalo config rotation reset` | todos | Zera a rotação. |
 
-### Altura por transformação
+### Altura por transformação e por cabelo
 
-A altura final da auréola é `height` + a altura extra da forma atual (e da forma *stack*, como Kaioken, se houver; as duas somam).
+A altura final da auréola é: `height` + altura da **forma** atual + altura do **cabelo** atual. Tudo é opcional e soma.
 Durante a transformação a altura **sobe/desce suavemente**, usando os mesmos fatores de transição que o próprio DMZ usa para o corpo:
-segurando **G** (a altura acompanha o progresso da carga) e na transformação instantânea (transição curta), e também ao reverter.
+segurando **G** (acompanha o progresso da carga), na transformação instantânea (transição curta) e ao reverter.
 
-Exemplo: `/dmzhalo config formheight supersaiyan 2` e `/dmzhalo config formheight supersaiyan4 4.5`.
+- **Por forma**: `/dmzhalo config formheight current 2` (na forma em que você está) ou `/dmzhalo config formheight supersaiyan 2`.
+  A forma *stack* (ex.: Kaioken) também conta, somando.
+- **Por cabelo** (melhor quando várias formas usam o mesmo cabelo): `/dmzhalo config hairheight current 1.5` ou `/dmzhalo config hairheight ssj3 4`.
+  Tipos de cabelo: `base`, `ssj`, `ssj2`, `ssj3`, `ssj4`, `custom` (forma com código de cabelo forçado) e `none` (forma sem cabelo).
+  É a mesma regra que o DMZ usa para escolher o cabelo de cada forma.
+
+Para ambos: `... <nome> reset` remove uma entrada, `... clear` remove todas, e o comando sem argumentos lista.
+
+### Rotação
+
+`/dmzhalo config rotation z 15` inclina a auréola para o lado (use `-15` para o outro lado). `x` inclina para frente/trás e `y` gira
+(quase invisível num anel). `/dmzhalo config rotation reset` zera. A auréola gira em volta do **próprio centro**. Valores em graus (-180 a 180).
 
 Todos os comandos de `config` alteram **somente a sua auréola**. Os outros jogadores veem a sua auréola com as suas configurações.
 A auréola continua aparecendo só quando o DMZ a mostra (jogador morto, ou `/dmzhalo on`).
@@ -38,7 +51,11 @@ A auréola continua aparecendo só quando o DMZ a mostra (jogador morto, ou `/dm
 [halo]
     height = 0.0
     color = "reset"
+    rotationX = 0.0
+    rotationY = 0.0
+    rotationZ = 0.0
     formHeights = ["supersaiyan=2.0", "supersaiyan4=4.5"]
+    hairHeights = ["ssj=1.5", "ssj3=4.0"]
     applyOnJoin = true
 ```
 
@@ -63,7 +80,7 @@ Requisitos: **JDK 17** e **Gradle 8.1.1**.
 gradle wrapper --gradle-version 8.1.1   # só na primeira vez (cria o ./gradlew)
 ./gradlew build
 ```
-O `.jar` fica em `build/libs/dmzconfighalo-1.1.0.jar`.
+O `.jar` fica em `build/libs/dmzconfighalo-1.2.0.jar`.
 
 Antes de compilar, troque `mod_authors` em `gradle.properties` pelo seu nome.
 
